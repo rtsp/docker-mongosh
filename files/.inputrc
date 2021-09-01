@@ -1,0 +1,22 @@
+## RTSP .inputrc (rtsp-bash)
+
+# allow the use of the Home/End keys
+"\e[1~": beginning-of-line
+"\e[4~": end-of-line
+
+# allow the use of the Delete/Insert keys
+"\e[3~": delete-char
+"\e[2~": quoted-insert
+
+# alternate mappings for "page up" and "page down" to search the history
+"\e[5~": history-search-backward
+"\e[6~": history-search-forward
+
+# make alt-arrow keys move forward/backward a word at a time
+"\e\e[C": forward-word
+"\e\e[D": backward-word
+
+# do not bell on tab-completion
+set bell-style none
+
+set enable-bracketed-paste off
