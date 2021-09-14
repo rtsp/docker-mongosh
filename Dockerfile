@@ -1,4 +1,4 @@
-FROM debian:bullseye-20210816-slim
+FROM debian:bullseye-20210902-slim
 
 LABEL org.opencontainers.image.title="RTSP MongoDB Shell"
 LABEL org.opencontainers.image.authors="RTSP <docker@rtsp.us>"
@@ -27,7 +27,7 @@ RUN set -x && apt-get update && apt-get --yes --no-install-recommends install \
     wget
 
 ARG MONGODB_VERSION=5.0
-ARG MONGOSH_VERSION=1.0.5
+ARG MONGOSH_VERSION=1.0.6
 
 RUN set -x \
     && curl -fsSL https://www.mongodb.org/static/pgp/server-${MONGODB_VERSION}.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-org-${MONGODB_VERSION}.gpg \
