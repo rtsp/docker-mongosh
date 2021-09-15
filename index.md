@@ -1,37 +1,88 @@
-## Welcome to GitHub Pages
+# RTSP MongoDB Shell Docker Image
 
-You can use the [editor on GitHub](https://github.com/rtsp/docker-mongosh/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Debian with [MongoDB Shell](https://docs.mongodb.com/mongodb-shell/) included.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+## Usage
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+In order to use image from GitHub Container Registry instead of Docker Hub, you can replace `rtsp/mongosh` with `ghcr.io/rtsp/docker-mongosh` anywhere in the instruction below.
 
-```markdown
-Syntax highlighted code block
+### Pull Image
 
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```ShellSession
+docker pull rtsp/mongosh
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### Run Once
 
-### Jekyll Themes
+```ShellSession
+docker run --rm -it rtsp/mongosh mongosh -- mongodb://172.17.0.1:27017
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/rtsp/docker-mongosh/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+### Run as Daemon
 
-### Support or Contact
+```ShellSession
+docker run -d --name mongosh rtsp/mongosh
+docker exec -it mongosh mongosh -- mongodb://172.17.0.1:27017
+```
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+
+### Kubernetes
+
+#### Pod
+
+```yaml
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mongosh
+spec:
+  containers:
+  - name: mongosh
+    image: rtsp/mongosh:latest
+```
+
+```ShellSession
+kubectl exec -it mongosh -- mongosh mongodb://ENDPOINT:27017
+```
+
+#### DaemonSet
+
+```yaml
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: mongosh
+spec:
+  selector:
+    matchLabels:
+      name: mongosh
+  template:
+    metadata:
+      labels:
+        name: mongosh
+    spec:
+      containers:
+        - name: mongosh
+          image: rtsp/mongosh:latest
+          imagePullPolicy: IfNotPresent
+      terminationGracePeriodSeconds: 30
+```
+
+```ShellSession
+kubectl exec -it mongosh-XXXXXX -- mongosh mongodb://ENDPOINT:27017
+```
+
+
+## Links
+
+### Packages
+
+- Docker Hub: [rtsp/mongosh](https://hub.docker.com/r/rtsp/mongosh/)
+- GitHub: [ghcr.io/rtsp/docker-mongosh](https://github.com/rtsp/docker-mongosh/pkgs/container/docker-mongosh)
+
+### Source Code
+
+- [rtsp/docker-mongosh](https://github.com/rtsp/docker-mongosh)
