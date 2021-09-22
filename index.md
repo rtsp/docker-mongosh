@@ -1,6 +1,17 @@
 # RTSP MongoDB Shell Docker Image
 
-Debian with [MongoDB Shell](https://docs.mongodb.com/mongodb-shell/) included.
+Debian with [MongoDB Shell (mongosh)](https://docs.mongodb.com/mongodb-shell/) included.
+
+
+## `mongosh` Usage
+
+For the `mongosh` command usage, please refer to the following documents.
+
+- [Connect to a Deployment](https://docs.mongodb.com/mongodb-shell/connect/)
+- [`mongosh` Usage](https://docs.mongodb.com/mongodb-shell/run-commands/)
+  - [Perform CRUD Operations](https://docs.mongodb.com/mongodb-shell/crud/)
+  - [Run Aggregation Pipelines](https://docs.mongodb.com/mongodb-shell/run-agg-pipelines/)
+- [`mongosh` Options](https://docs.mongodb.com/mongodb-shell/reference/options/)
 
 
 ## Usage
@@ -13,23 +24,37 @@ In order to use image from GitHub Container Registry instead of Docker Hub, you 
 docker pull rtsp/mongosh
 ```
 
-### Run Once
+### Interactive Mode
 
 ```ShellSession
 docker run --rm -it rtsp/mongosh mongosh -- mongodb://172.17.0.1:27017
+```
+
+```ShellSession
+docker run --rm -it rtsp/mongosh bash
+```
+
+### Run a Specific Command
+
+```ShellSession
+docker run --rm rtsp/mongosh mongosh -- mongodb://172.17.0.1:27017 --eval 'db.serverStatus()'
 ```
 
 ### Run as Daemon
 
 ```ShellSession
 docker run -d --name mongosh rtsp/mongosh
-docker exec -it mongosh mongosh -- mongodb://172.17.0.1:27017
 ```
 
+```ShellSession
+docker exec mongosh mongosh -- mongodb://172.17.0.1:27017 --eval 'db.serverStatus()'
 
-### Kubernetes
+docker exec -it mongosh mongosh -- mongodb://172.17.0.1:27017
 
-#### Pod
+docker exec -it mongosh bash
+```
+
+### Run as Kubernetes Pod
 
 ```yaml
 ---
@@ -44,35 +69,11 @@ spec:
 ```
 
 ```ShellSession
+kubectl exec mongosh -- mongosh mongodb://ENDPOINT:27017 --eval 'db.serverStatus()'
+
 kubectl exec -it mongosh -- mongosh mongodb://ENDPOINT:27017
-```
 
-#### DaemonSet
-
-```yaml
----
-apiVersion: apps/v1
-kind: DaemonSet
-metadata:
-  name: mongosh
-spec:
-  selector:
-    matchLabels:
-      name: mongosh
-  template:
-    metadata:
-      labels:
-        name: mongosh
-    spec:
-      containers:
-        - name: mongosh
-          image: rtsp/mongosh:latest
-          imagePullPolicy: IfNotPresent
-      terminationGracePeriodSeconds: 30
-```
-
-```ShellSession
-kubectl exec -it mongosh-XXXXXX -- mongosh mongodb://ENDPOINT:27017
+kubectl exec -it mongosh -- bash
 ```
 
 
