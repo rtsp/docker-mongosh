@@ -33,9 +33,11 @@ RUN set -x \
     && curl -fsSL https://www.mongodb.org/static/pgp/server-${MONGODB_VERSION}.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-org-${MONGODB_VERSION}.gpg \
     && echo "deb https://repo.mongodb.org/apt/debian buster/mongodb-org/${MONGODB_VERSION} main" > /etc/apt/sources.list.d/mongodb-org-${MONGODB_VERSION}.list
 
+ARG TARGETPLATFORM
+
 RUN set -x && apt-get update && apt-get --yes --no-install-recommends install \
     mongodb-mongosh=${MONGOSH_VERSION} \
-    mongodb-database-tools \
+    $( [[ $TARGETPLATFORM == 'linux/amd64' ]] && echo mongodb-database-tools) \
     && rm -rvf /var/lib/apt/lists/*
 
 COPY files/ /root/
