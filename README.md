@@ -76,6 +76,39 @@ kubectl exec -it mongosh -- mongosh mongodb://ENDPOINT:27017
 kubectl exec -it mongosh -- bash
 ```
 
+### Run as Kubernetes Deployment
+
+```yaml
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongosh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: mongosh
+  template:
+    metadata:
+      labels:
+        name: mongosh
+    spec:
+      containers:
+        - name: mongosh
+          image: rtsp/mongosh:latest
+          imagePullPolicy: Always
+```
+
+```ShellSession
+kubectl exec deployment/mongosh -- mongosh mongodb://ENDPOINT:27017 --eval 'db.serverStatus()'
+
+kubectl exec -it deployment/mongosh -- mongosh mongodb://ENDPOINT:27017
+
+kubectl exec -it deployment/mongosh -- bash
+```
+
+
 
 ## Links
 
