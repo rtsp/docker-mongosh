@@ -27,7 +27,7 @@ RUN set -x && apt-get update && apt-get --yes --no-install-recommends install \
     wget
 
 ARG MONGODB_VERSION=5.0
-ARG MONGOSH_VERSION=1.3.0
+ARG MONGOSH_VERSION=1.3.1
 
 RUN set -x \
     && curl -fsSL https://www.mongodb.org/static/pgp/server-${MONGODB_VERSION}.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-org-${MONGODB_VERSION}.gpg \
