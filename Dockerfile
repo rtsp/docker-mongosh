@@ -37,7 +37,7 @@ ARG TARGETPLATFORM
 
 RUN set -x && apt-get update && apt-get --yes --no-install-recommends install \
     mongodb-mongosh=${MONGOSH_VERSION} \
-    $( [[ $TARGETPLATFORM == 'linux/amd64' ]] && echo mongodb-database-tools) \
+    $( [ "$TARGETPLATFORM" = "linux/amd64" ] && echo mongodb-database-tools) \
     && rm -rvf /var/lib/apt/lists/*
 
 COPY files/ /root/
