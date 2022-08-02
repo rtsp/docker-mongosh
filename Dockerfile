@@ -24,7 +24,8 @@ RUN set -x && apt-get update && apt-get --yes --no-install-recommends install \
     sed \
     telnet \
     vim-tiny \
-    wget
+    wget \
+    && rm -rvf /var/lib/apt/lists/*
 
 ARG MONGODB_VERSION=5.0
 ARG MONGOSH_VERSION=1.5.4
