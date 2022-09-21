@@ -32,7 +32,7 @@ ARG MONGOSH_VERSION=1.5.4
 
 RUN set -x \
     && curl -fsSL https://www.mongodb.org/static/pgp/server-${MONGODB_VERSION}.asc | gpg --dearmor -o /etc/apt/trusted.gpg.d/mongodb-org-${MONGODB_VERSION}.gpg \
-    && echo "deb https://repo.mongodb.org/apt/debian buster/mongodb-org/${MONGODB_VERSION} main" > /etc/apt/sources.list.d/mongodb-org-${MONGODB_VERSION}.list
+    && echo "deb https://repo.mongodb.org/apt/debian bullseye/mongodb-org/${MONGODB_VERSION} main" > /etc/apt/sources.list.d/mongodb-org-${MONGODB_VERSION}.list
 
 ARG TARGETPLATFORM
 
