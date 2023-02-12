@@ -43,4 +43,4 @@ RUN set -x && apt-get update && apt-get --yes --no-install-recommends install \
 
 COPY files/ /root/
 
-CMD ["/bin/sleep", "365d"]
+CMD ["/bin/sleep", "infinity"]
