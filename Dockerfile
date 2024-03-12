@@ -1,4 +1,4 @@
-FROM debian:bullseye-20240211-slim
+FROM debian:bullseye-20240311-slim
 
 LABEL org.opencontainers.image.title="RTSP MongoDB Shell"
 LABEL org.opencontainers.image.authors="RTSP <docker@rtsp.us>"
