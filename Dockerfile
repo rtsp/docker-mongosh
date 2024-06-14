@@ -27,7 +27,7 @@ RUN set -x && apt-get update && apt-get --yes --no-install-recommends install \
     wget \
     && rm -rvf /var/lib/apt/lists/*
 
-ARG MONGODB_VERSION=6.0
+ARG MONGODB_VERSION=7.0
 ARG MONGOSH_VERSION=2.2.7
 
 RUN set -x \
