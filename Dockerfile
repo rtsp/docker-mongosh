@@ -1,4 +1,4 @@
-FROM debian:bookworm-20261020-slim
+FROM debian:bookworm-20261027-slim
 
 LABEL org.opencontainers.image.title="RTSP MongoDB Shell"
 LABEL org.opencontainers.image.authors="RTSP <docker@rtsp.us>"
